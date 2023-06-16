@@ -1,0 +1,34 @@
+import re
+
+def parse_declaration(input_string):
+    # Remove any whitespace from the input string
+    input_string = input_string.replace(" ", "")
+    
+    # Regular expressions for matching patterns
+    dt_regex = r"(int|float)"
+    naam_regex = r"(_[a-zA-Z0-9]*|[a-zA-Z][a-zA-Z0-9]*)"
+    num_regex = r"([0-9]+\.[0-9]*|[0-9]+\.[0-9]+|[0-9]+)"
+    
+    # Parse the input string
+    match = re.match(r"(" + dt_regex + ")(" + naam_regex + r")=(" + num_regex + r");$", input_string)
+    
+    if match:
+        dt = match.group(1)
+        naam = match.group(2)
+        num = match.group(4)
+        
+        return (dt, naam, num)
+    else:
+        return None
+
+# Test the implementation
+declaration = input("Enter a variable declaration: ")
+result = parse_declaration(declaration)
+
+if result:
+    dt, naam, num = result
+    print("Data type:", dt)
+    print("Variable name:", naam)
+    print("Value:", num)
+else:
+    print("Invalid declaration!")
